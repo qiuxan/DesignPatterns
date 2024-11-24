@@ -1,4 +1,6 @@
-﻿namespace Dependency_Inversion_Principle;
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace Dependency_Inversion_Principle;
 
 internal class Program
 {
@@ -14,8 +16,13 @@ internal class Program
     {
         public string Name;
     }
+
+    public interface IRelationshipBrower
+    {
+        IEnumerable<Person> FindAllChildrenOf(string name);
+    }
     //low-level module
-    public class Relationships 
+    public class Relationships : IRelationshipBrower
     {
         private List<(Person, Relationship, Person)> relations = new List<(Person, Relationship, Person)>();
 
@@ -26,19 +33,34 @@ internal class Program
         }
 
         public List<(Person, Relationship, Person)> Relations => relations;
+        public IEnumerable<Person> FindAllChildrenOf(string name)
+        {
+            return relations.Where(
+                x => x.Item1.Name == "John" &&
+                     x.Item2 == Relationship.Parent
+            ).Select(r => r.Item3);
+        }
     }
 
     public class Research
     {
-        public Research(Relationships relationships)
+        //public Research(Relationships relationships)
+        //{
+        //    var relations = relationships.Relations;
+        //    foreach (var r in relations.Where(
+        //        x => x.Item1.Name == "John" &&
+        //             x.Item2 == Relationship.Parent
+        //    ))
+        //    {
+        //        Console.WriteLine($"John has a child called {r.Item3.Name}");
+        //    }
+        //}
+
+        public Research(IRelationshipBrower browser)
         {
-            var relations = relationships.Relations;
-            foreach (var r in relations.Where(
-                x => x.Item1.Name == "John" &&
-                     x.Item2 == Relationship.Parent
-            ))
+            foreach (var p in browser.FindAllChildrenOf("John"))
             {
-                Console.WriteLine($"John has a child called {r.Item3.Name}");
+                Console.WriteLine($"John has a child called {p.Name}");
             }
         }
 
