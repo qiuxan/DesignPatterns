@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Open-Closed Principle", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liskov Substitution Principle", "..\Liskov Substitution Principle\Liskov Substitution Principle.csproj", "{BD0101FB-9EF5-4832-968C-107B59315AB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface Segregation Principle", "..\Interface Segregation Principle\Interface Segregation Principle.csproj", "{806877EB-59E7-4F9B-B7C3-81497D7148E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BD0101FB-9EF5-4832-968C-107B59315AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD0101FB-9EF5-4832-968C-107B59315AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD0101FB-9EF5-4832-968C-107B59315AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{806877EB-59E7-4F9B-B7C3-81497D7148E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806877EB-59E7-4F9B-B7C3-81497D7148E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{806877EB-59E7-4F9B-B7C3-81497D7148E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{806877EB-59E7-4F9B-B7C3-81497D7148E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
