@@ -11,18 +11,18 @@ public class Person
     }
 }
 
-public class PersonBuilder
+public class PersonInfoBuilder
 {
     protected Person person = new();
 
-    public PersonBuilder called(string name)
+    public PersonInfoBuilder called(string name)
     {
         person.Name = name;
         return this;
     }
 }
 
-public class PersonJobBuilder : PersonBuilder
+public class PersonJobBuilder : PersonInfoBuilder
 {
     public PersonJobBuilder worksAsA(string position)
     {
