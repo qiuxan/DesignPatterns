@@ -54,6 +54,49 @@ public class TrackingThemeFactory
     }
 }
 
+
+public class ReplacableThemeFactory
+{
+    private readonly List<WeakReference<Ref<ITheme>>> themes = new();
+
+    private ITheme CreateThemeImpl(bool Dark)
+    {
+        return Dark ? new DarkTheme() : new LightTheme();
+    }
+    public Ref<ITheme> CreateTheme(bool dark)
+    {
+        var r = new Ref<ITheme>(CreateThemeImpl(dark));
+        themes.Add(new(r));
+        return r;
+
+    }
+
+    public void ReplaceTheme( bool dark)
+    {
+        foreach (var wr in themes)
+        {
+            if (wr.TryGetTarget(out var r))
+            {
+                r.Value = CreateThemeImpl(dark);
+            }
+        }
+    }
+
+}
+
+
+//when we want to revert to the previous themes, we could use a Ref class
+
+public class Ref<T>
+{
+    public T Value { get; set; }
+
+    public Ref(T value)
+    {
+        Value = value;
+    }
+}
+
 public class Program
 {
     static void Main(string[] args)
@@ -63,5 +106,13 @@ public class Program
         var theme2 = factory.CreateTheme(false);
 
         Console.WriteLine(factory.Info);
+
+        var replacableFactory = new ReplacableThemeFactory();
+        var theme3 = replacableFactory.CreateTheme(true);
+        Console.WriteLine(theme3.Value.BgrColor);
+        replacableFactory.ReplaceTheme(false);
+        Console.WriteLine(theme3.Value.BgrColor);
+
+
     }
 }
