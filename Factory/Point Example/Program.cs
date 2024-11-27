@@ -6,17 +6,8 @@ public enum CoordinateSystem
     Polar
 }
 
-public class Point
+public static class PointFactory
 {
-    private double x, y;
-
-    private Point(double x, double y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
-    //factory method
     public static Point NewCartesianPoint(double x, double y)
     {
         return new Point(x, y);
@@ -26,6 +17,19 @@ public class Point
     {
         return new Point(rho * Math.Cos(theta), rho * Math.Sin(theta));
     }
+}
+
+public class Point
+{
+    private double x, y;
+
+    public Point(double x, double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    //factory method
 
     public override string ToString()
     {
@@ -37,7 +41,9 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var point = Point.NewPolarPoint(1.0, Math.PI / 2);
+        var p = new Point(2, 3);// now we can create a point like this
+
+        var point = PointFactory.NewPolarPoint(1.0, Math.PI / 2);
         Console.WriteLine(point);
 
     }
