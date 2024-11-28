@@ -22,10 +22,61 @@ internal class Coffee : IHotDrink
 }
 //every time we add a new drink, we need to add a new class
 
+public interface IHotDrinkFactory
+{
+    IHotDrink Prepare(int amount);
+}
+
+internal class TeaFactory : IHotDrinkFactory
+{
+    public IHotDrink Prepare(int amount)
+    {
+        Console.WriteLine($"Put in tea bag, boil water, pour {amount} ml, add lemon, enjoy!");
+        return new Tea();
+    }
+}
+
+internal class CoffeeFactory : IHotDrinkFactory
+{
+    public IHotDrink Prepare(int amount)
+    {
+        Console.WriteLine($"Grind some beans, boil water, pour {amount} ml, add cream and sugar, enjoy!");
+        return new Coffee();
+    }
+}
+
+public class HotDrinkMachine
+{
+    public enum AvailableDrink
+    {
+        Coffee, Tea
+    }
+
+    private Dictionary<AvailableDrink, IHotDrinkFactory> factories = new();
+
+    public HotDrinkMachine()
+    {
+        foreach (AvailableDrink drink in Enum.GetValues(typeof(AvailableDrink)))
+        {
+            var factory = (IHotDrinkFactory)Activator.CreateInstance(
+                Type.GetType("Abstract_Factory." + Enum.GetName(typeof(AvailableDrink), drink) + "Factory")
+            );
+            factories.Add(drink, factory);
+        }
+    }
+
+    public IHotDrink MakeDrink(AvailableDrink drink, int amount)
+    {
+        return factories[drink].Prepare(amount);
+    }
+}
+
 internal class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var machine = new HotDrinkMachine();
+        var drink = machine.MakeDrink(HotDrinkMachine.AvailableDrink.Tea, 200);
+        drink.Consume();
     }
 }
