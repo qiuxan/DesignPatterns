@@ -45,30 +45,77 @@ internal class CoffeeFactory : IHotDrinkFactory
     }
 }
 
+
 public class HotDrinkMachine
 {
-    public enum AvailableDrink
-    {
-        Coffee, Tea
-    }
-
-    private Dictionary<AvailableDrink, IHotDrinkFactory> factories = new();
+    private List<Tuple<string, IHotDrinkFactory>> factories = new();
 
     public HotDrinkMachine()
     {
-        foreach (AvailableDrink drink in Enum.GetValues(typeof(AvailableDrink)))
+        foreach (var t in typeof(HotDrinkMachine).Assembly.GetTypes())
         {
-            var factory = (IHotDrinkFactory)Activator.CreateInstance(
-                Type.GetType("Abstract_Factory." + Enum.GetName(typeof(AvailableDrink), drink) + "Factory")
-            );
-            factories.Add(drink, factory);
+            if (typeof(IHotDrinkFactory).IsAssignableFrom(t) &&
+                !t.IsInterface)
+            {
+                factories.Add(Tuple.Create(
+                    t.Name.Replace("Factory", string.Empty),
+                    (IHotDrinkFactory)Activator.CreateInstance(t)
+                ));
+            }
+        }
+        
+    }
+    public IHotDrink MakeDrink()
+    {
+        Console.WriteLine("Available drinks:");
+        for (var index = 0; index < factories.Count; index++)
+        {
+            var tuple = factories[index];
+            Console.WriteLine($"{index}: {tuple.Item1}");
+        }
+
+        while (true)
+        {
+            string s;
+            if ((s = Console.ReadLine()) != null
+                && int.TryParse(s, out int i)
+                && i >= 0
+                && i < factories.Count)
+            {
+                Console.Write("Specify amount: ");
+                s = Console.ReadLine();
+                if (s != null
+                    && int.TryParse(s, out int amount)
+                    && amount > 0)
+                {
+                    return factories[i].Item2.Prepare(amount);
+                }
+            }
+            Console.WriteLine("Incorrect input, try again.");
         }
     }
+    //public enum AvailableDrink
+    //{
+    //    Coffee, Tea
+    //}
 
-    public IHotDrink MakeDrink(AvailableDrink drink, int amount)
-    {
-        return factories[drink].Prepare(amount);
-    }
+    //private Dictionary<AvailableDrink, IHotDrinkFactory> factories = new();
+
+    //public HotDrinkMachine()
+    //{
+    //    foreach (AvailableDrink drink in Enum.GetValues(typeof(AvailableDrink)))
+    //    {
+    //        var factory = (IHotDrinkFactory)Activator.CreateInstance(
+    //            Type.GetType("Abstract_Factory." + Enum.GetName(typeof(AvailableDrink), drink) + "Factory")
+    //        );
+    //        factories.Add(drink, factory);
+    //    }
+    //}
+
+    //public IHotDrink MakeDrink(AvailableDrink drink, int amount)
+    //{
+    //    return factories[drink].Prepare(amount);
+    //}
 }
 
 internal class Program
@@ -76,7 +123,6 @@ internal class Program
     static void Main(string[] args)
     {
         var machine = new HotDrinkMachine();
-        var drink = machine.MakeDrink(HotDrinkMachine.AvailableDrink.Tea, 200);
-        drink.Consume();
+        machine.MakeDrink();
     }
 }
