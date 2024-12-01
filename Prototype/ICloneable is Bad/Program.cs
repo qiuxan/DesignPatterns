@@ -3,7 +3,7 @@
 namespace ICloneable_is_Bad;
 // ICloneable is ill-specified
 
-public class Address : ICloneable
+public class Address
 {
     public readonly string StreetName;
     public int HouseNumber;
@@ -14,18 +14,21 @@ public class Address : ICloneable
         HouseNumber = houseNumber;
     }
 
+    public Address(Address other)
+    {
+        StreetName = other.StreetName;
+        HouseNumber = other.HouseNumber;
+
+    }
+
     public override string ToString()
     {
         return $"{nameof(StreetName)}: {StreetName}, {nameof(HouseNumber)}: {HouseNumber}";
     }
 
-    public object Clone()
-    {
-        return new Address(StreetName, HouseNumber);
-    }
 }
 
-public class Person : ICloneable
+public class Person
 {
     public readonly string[] Names;
     public readonly Address Address;
@@ -36,15 +39,18 @@ public class Person : ICloneable
         Address = address;
     }
 
+    public Person(Person other)
+    { // copy constructor
+        Names = other.Names;
+        Address = new Address(other.Address);
+
+    }
+
     public override string ToString()
     {
         return $"{nameof(Names)}: {string.Join(",", Names)}, {nameof(Address)}: {Address}";
     }
 
-    public object Clone()
-    {
-        return new Person(Names, Address);
-    }
 }
 internal class Program
 {
@@ -52,13 +58,9 @@ internal class Program
     {
         var john = new Person(new[] { "John", "Smith" }, new Address("London Road", 123));
 
-        var jane = (Person)john.Clone();
-        jane.Address.HouseNumber = 321; // oops, John is now at 321
+        var jane = new Person(john);
 
-        // this doesn't work
-        //var jane = john;
-
-        // but clone is typically shallow copy
+        jane.Address.HouseNumber = 321; 
         jane.Names[0] = "Jane";
 
         WriteLine(john);
