@@ -3,7 +3,12 @@
 namespace ICloneable_is_Bad;
 // ICloneable is ill-specified
 
-public class Address
+public interface IPrototype<T>
+{
+    T DeepCopy();
+}
+
+public class Address : IPrototype<Address>
 {
     public readonly string StreetName;
     public int HouseNumber;
@@ -21,6 +26,11 @@ public class Address
 
     }
 
+    public Address DeepCopy()
+    {
+        return new Address(StreetName, HouseNumber);
+    }
+
     public override string ToString()
     {
         return $"{nameof(StreetName)}: {StreetName}, {nameof(HouseNumber)}: {HouseNumber}";
@@ -28,7 +38,7 @@ public class Address
 
 }
 
-public class Person
+public class Person : IPrototype<Person>
 {
     public readonly string[] Names;
     public readonly Address Address;
@@ -46,6 +56,11 @@ public class Person
 
     }
 
+    public Person DeepCopy()
+    {
+        return new Person(Names, Address.DeepCopy());
+    }
+
     public override string ToString()
     {
         return $"{nameof(Names)}: {string.Join(",", Names)}, {nameof(Address)}: {Address}";
@@ -58,7 +73,7 @@ internal class Program
     {
         var john = new Person(new[] { "John", "Smith" }, new Address("London Road", 123));
 
-        var jane = new Person(john);
+        var jane = john.DeepCopy();
 
         jane.Address.HouseNumber = 321; 
         jane.Names[0] = "Jane";
