@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singleton Implementation", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monostate", "..\Monostate\Monostate.csproj", "{61C2C038-FEF3-4216-A8E8-F296610ACBD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Per-Thread Singleton", "..\Per-Thread Singleton\Per-Thread Singleton.csproj", "{56CEEC68-F690-4F8E-BFC2-B45025E7D25E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{61C2C038-FEF3-4216-A8E8-F296610ACBD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61C2C038-FEF3-4216-A8E8-F296610ACBD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61C2C038-FEF3-4216-A8E8-F296610ACBD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56CEEC68-F690-4F8E-BFC2-B45025E7D25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CEEC68-F690-4F8E-BFC2-B45025E7D25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CEEC68-F690-4F8E-BFC2-B45025E7D25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CEEC68-F690-4F8E-BFC2-B45025E7D25E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
