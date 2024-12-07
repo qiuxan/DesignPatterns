@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using MoreLinq;
 
 namespace Vector_Raster_Demo;
 
@@ -40,7 +41,36 @@ public class VectorRectangle : VectorObject
     }
 
 }
+public class LineToPointAdapter : Collection<Point>
+{
+    private static int count = 0;
+    public LineToPointAdapter(Line line)
+    {
+        Console.WriteLine($"{++count}: Generating points for line [{line.Start.x},{line.Start.y}]-[{line.End.x},{line.End.y}]");
 
+        int left = Math.Min(line.Start.x, line.End.x);
+        int right = Math.Max(line.Start.x, line.End.x);
+        int top = Math.Min(line.Start.y, line.End.y);
+        int bottom = Math.Max(line.Start.y, line.End.y);
+        int dx = right - left;
+        int dy = line.End.y - line.Start.y;
+
+        if (dx == 0)
+        {
+            for (int y = top; y <= bottom; ++y)
+            {
+                Add(new Point(left, y));
+            }
+        }
+        else if (dy == 0)
+        {
+            for (int x = left; x <= right; ++x)
+            {
+                Add(new Point(x, top));
+            }
+        }
+    }
+}
 
 class Program
 {
@@ -51,10 +81,24 @@ class Program
     };
     public static void DrawPoint(Point p)
     {
-        Console.WriteLine(".");
+        Console.Write(".");
     }
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Draw();
+        Draw();
+
+    }
+
+    private static void Draw()
+    {
+        foreach (var vo in vectorObjects)
+        {
+            foreach (var line in vo)
+            {
+                var adapter = new LineToPointAdapter(line);
+                adapter.ForEach(DrawPoint);
+            }
+        }
     }
 }
