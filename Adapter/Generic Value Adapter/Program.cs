@@ -21,8 +21,9 @@ public static class Demensions
     }
 }
 
-public class Vector<T, D>
+public class Vector<TSelf, T, D>
     where D : IInteger, new()
+    where TSelf : Vector<TSelf, T, D>, new()
 {
     protected T[] data;
 
@@ -51,6 +52,19 @@ public class Vector<T, D>
 
     //public Vector(T x, T y,T z ...)// not a good idea either
 
+    public static TSelf  Create(params T[] values)
+    {
+        var result = new TSelf();
+        var requiredSize = new D().Value;
+        result.data = new T[requiredSize];
+        var providedSize = values.Length;
+
+        for (int i = 0; i < Math.Min(requiredSize, providedSize); i++)
+        {
+            result.data[i] = values[i];
+        }
+        return result;
+    }
     public Vector(params T[] values)
     {
         var requiredSize = new D().Value;
@@ -65,7 +79,7 @@ public class Vector<T, D>
 
 }
 
-public class VectorOfInt<D> : Vector<int, D>
+public class VectorOfInt<D> : Vector<VectorOfInt<D>, int, D>
     where D : IInteger, new()
 {
     public VectorOfInt()
@@ -89,6 +103,14 @@ public class VectorOfInt<D> : Vector<int, D>
 
 }
 
+public class VectorOfFloat<TSelf,D> : Vector<TSelf, float, D>
+    where D : IInteger, new()
+    where TSelf : Vector<TSelf, float, D>, new()
+{
+
+
+}
+
 public class Vector2i : VectorOfInt< Demensions.Two>
 {
     public Vector2i()
@@ -101,6 +123,13 @@ public class Vector2i : VectorOfInt< Demensions.Two>
 
 }
 
+public class Vector3f : VectorOfFloat<Vector3f,Demensions.Three>
+{ 
+
+}
+
+
+
 
 class Demo
 {
@@ -112,5 +141,7 @@ class Demo
         var vv = new Vector2i(3,2);
 
         var result = v + vv;
+
+        Vector3f u = Vector3f.Create(3.5f, 2.2f, 1.1f);
     }
 }
