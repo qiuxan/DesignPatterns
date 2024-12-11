@@ -28,20 +28,14 @@ public class Button
     private ICommad _command;
     private string _name;
 
-    public Button(ICommad command, string name)
+    public Button(ICommad command)
     {
         _command = command;
-        _name = name;
     }
 
     public void Click()
     {
         _command.Execute();
-    }
-
-    public void PrintMe()
-    {
-        Console.WriteLine($"I am a button called {_name}");
     }
 }
 
