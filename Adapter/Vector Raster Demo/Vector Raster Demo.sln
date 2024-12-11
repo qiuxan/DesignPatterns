@@ -5,7 +5,9 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vector Raster Demo", "Vector Raster Demo.csproj", "{AD07BEAD-DB59-44F6-A1A5-B810AD726A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generic Value Adapter", "..\Generic Value Adapter\Generic Value Adapter.csproj", "{E7CD09A2-7318-479A-A5A9-55FE7FADD63C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generic Value Adapter", "..\Generic Value Adapter\Generic Value Adapter.csproj", "{E7CD09A2-7318-479A-A5A9-55FE7FADD63C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter in Dependency Injection", "..\Adapter in Dependency Injection\Adapter in Dependency Injection.csproj", "{6CE5F1C6-B5FB-420B-AB20-1C877A332DCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E7CD09A2-7318-479A-A5A9-55FE7FADD63C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7CD09A2-7318-479A-A5A9-55FE7FADD63C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7CD09A2-7318-479A-A5A9-55FE7FADD63C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE5F1C6-B5FB-420B-AB20-1C877A332DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE5F1C6-B5FB-420B-AB20-1C877A332DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE5F1C6-B5FB-420B-AB20-1C877A332DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE5F1C6-B5FB-420B-AB20-1C877A332DCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
