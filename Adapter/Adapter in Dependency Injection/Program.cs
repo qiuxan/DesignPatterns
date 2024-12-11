@@ -26,15 +26,22 @@ public class OpenCommand : ICommad
 public class Button
 {
     private ICommad _command;
+    private string _name;
 
-    public Button(ICommad command)
+    public Button(ICommad command, string name)
     {
         _command = command;
+        _name = name;
     }
 
     public void Click()
     {
         _command.Execute();
+    }
+
+    public void PrintMe()
+    {
+        Console.WriteLine($"I am a button called {_name}");
     }
 }
 
@@ -65,7 +72,8 @@ internal class Program
         var b = new ContainerBuilder();
         b.RegisterType<SaveCommand>().As<ICommad>();
         b.RegisterType<OpenCommand>().As<ICommad>();
-        b.RegisterType<Button>();
+        //b.RegisterType<Button>();
+        b.RegisterAdapter<ICommad, Button>(cmd => new Button(cmd));
         b.RegisterType<Editor>();
 
         using (var c = b.Build())
