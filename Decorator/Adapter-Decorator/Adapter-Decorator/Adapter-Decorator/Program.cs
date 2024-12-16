@@ -1,10 +1,12 @@
-﻿public class Demo
+﻿using System.Text;
+
+public class Demo
 
 
 {
     static void Main(string[] args)
     {
-        var s = "hello";
+        StringBuilder s = "hello";
         s+= " world";
         Console.WriteLine(s);
     }
