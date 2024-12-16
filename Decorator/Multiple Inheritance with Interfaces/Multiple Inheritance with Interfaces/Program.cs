@@ -36,8 +36,17 @@ public class Dragon: IBird, ILizard
 {
     private Bird bird = new Bird();
     private Lizard lizard = new Lizard();
+    private int _weight;
 
-    public int weight { get; set; }
+    public int weight
+    {
+        get => _weight;
+        set { 
+            _weight = value;
+            bird.weight = value;
+            lizard.weight = value;
+        }
+    }
 
 
     public void Fly()
