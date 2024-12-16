@@ -1,5 +1,10 @@
 ﻿
-public class Bird
+public interface IBird
+{
+    void Fly();
+}
+
+public class Bird : IBird
 {
     public void Fly()
     {
@@ -7,7 +12,12 @@ public class Bird
     }
 }
 
-public class Lizard
+public interface ILizard
+{
+    void Crawl();
+}
+
+public class Lizard : ILizard
 {
     public void Crawl()
     {
@@ -16,8 +26,20 @@ public class Lizard
 }
 
 
-public class Dragon: Bird, Lizard// cannot use multiple inheritance in C#
+public class Dragon: IBird, ILizard
 {
+    private Bird bird = new Bird();
+    private Lizard lizard = new Lizard();
+
+    public void Fly()
+    {
+        bird.Fly();
+    }
+
+    public void Crawl()
+    {
+        lizard.Crawl();
+    }
 
 }
 
@@ -29,6 +51,9 @@ static class Program
 {
     static void Main(string[] args)
     {
-     
+        var dragon = new Dragon();
+        dragon.Fly();
+        dragon.Crawl();
+
     }
 }
